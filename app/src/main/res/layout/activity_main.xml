@@ -8,20 +8,13 @@
     android:background="@color/window_bg"
     android:orientation="vertical">
 
-    <!--com.dinson.blingbase.widget.acrlayout.ArcLayout
-
-       app:alCropDirection="cropOutside"
-        app:alHeight="20dp"
-        app:alPosition="bottom"
-
-        -->
     <com.dinson.blingbase.widget.acrlayout.ArcLayout
         android:id="@+id/alTop"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         app:alCropDirection="cropOutside"
         app:alHeight="20dp"
-        app:alPosition="bottom"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        app:alPosition="bottom">
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -93,8 +86,7 @@
     <com.scwang.smart.refresh.layout.SmartRefreshLayout
         android:id="@+id/srlOrder"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        android:layout_height="match_parent">
 
         <com.scwang.smart.refresh.header.MaterialHeader
             android:layout_width="match_parent"
