@@ -1,0 +1,77 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-android-extensions'
+}
+
+android {
+    compileSdkVersion 30
+    buildToolsVersion "30.0.0"
+
+    defaultConfig {
+        applicationId "com.zjta.collectionvoice"
+        minSdkVersion 21
+        targetSdkVersion 26
+        versionCode 9
+        versionName "1.1.7"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    android.applicationVariants.all { variant ->
+        variant.outputs.all {
+            if (variant.buildType.name == "release") {
+                outputFileName = "CXW_${new Date().format("MMdd_HHmm")}_code${defaultConfig.versionCode}_name${defaultConfig.versionName}_${variant.buildType.name}.apk"
+            } else {
+                outputFileName = "CXW_${new Date().format("MMdd_HHmm")}_code${defaultConfig.versionCode}_name${defaultConfig.versionName}_${variant.buildType.name}.apk"
+            }
+        }
+    }
+
+    signingConfigs {
+        app {
+            Properties prop = new Properties()
+            prop.load(new FileInputStream(file("../key.properties")))
+            storeFile file(prop['KEYSTORE_FILEPATH'])
+            storePassword prop['STORE_PASSWORD']
+            keyAlias prop['KEY_ALIAS']
+            keyPassword prop['KEY_PASSWORD']
+        }
+    }
+    buildTypes {
+        release {
+            signingConfig signingConfigs.app
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+
+        debug {
+            signingConfig signingConfigs.app
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation 'androidx.core:core-ktx:1.3.2'
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'com.google.android.material:material:1.2.1'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+
+//    implementation 'com.dinson.bling:android-base:1.3.4.2'
+    implementation project(path: ':blingbase')
+    implementation project(path: ':voicebroadcast-lib')
+    implementation "org.java-websocket:Java-WebSocket:1.5.1"
+    implementation 'com.scwang.smart:refresh-layout-kernel:2.0.1'
+    implementation 'com.scwang.smart:refresh-header-material:2.0.1'
+    implementation 'com.scwang.smart:refresh-header-classics:2.0.0'
+
+}

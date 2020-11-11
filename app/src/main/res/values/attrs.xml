@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--自定义标题栏-->
+    <declare-styleable name="CommonTitleBar">
+        <attr name="backgroundResource" format="reference" />
+        <!--最外层是否实现了fitsSystemWindows这个属性-->
+        <attr name="ancestorFitsSystemWindow" format="boolean" />
+
+        <attr name="leftBtnVisible" format="boolean" />
+        <attr name="leftBtnDrawable" format="reference|color" />
+
+        <attr name="rightBtnVisible" format="boolean" />
+        <attr name="rightBtnDrawable" format="reference|color" />
+
+        <attr name="titleText" format="string" />
+        <attr name="titleTextColor" format="color" />
+
+        <attr name="leftText" format="string" />
+        <attr name="leftTextColor" format="color" />
+
+        <attr name="rightText" format="string" />
+        <attr name="rightTextColor" format="color" />
+        <attr name="rightTextVisible" format="boolean" />
+    </declare-styleable>
+
+
+    <declare-styleable name="password_edit_text">
+        <attr name="petShowDrawable" format="integer"/>
+        <attr name="petHideDrawable" format="integer"/>
+        <attr name="petPwdVisible" format="boolean"/>
+    </declare-styleable>
+</resources>

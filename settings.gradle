@@ -1,0 +1,6 @@
+include ':app',':voicebroadcast-lib'
+rootProject.name = "CollectionVoice"
+
+
+include ":blingbase"
+project(":blingbase").projectDir = file("/Users/android/AndroidProgects/BlingBling/blingbase")
