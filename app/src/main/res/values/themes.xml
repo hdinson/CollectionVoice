@@ -46,4 +46,13 @@
         <item name="android:windowEnterAnimation">@anim/dialog_appear_from_bottom</item>
         <item name="android:windowExitAnimation">@anim/dialog_disappear_to_bottom</item>
     </style>
+
+
+    <style name="HooliganActivityStyle">
+        <item name="android:windowBackground">#00000000</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowNoDisplay">false</item>
+        <item name="android:windowDisablePreview">true</item>
+    </style>
 </resources>
