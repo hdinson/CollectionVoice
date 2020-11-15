@@ -44,10 +44,6 @@ class LoginActivity : BaseActivity() {
             mCurrentModeIsPhone = !mCurrentModeIsPhone
             changeMode(mCurrentModeIsPhone)
         }
-        test.click {
-            etPhone.setText("10086")
-            etPhonePwd.setText("123456")
-        }
         vDoLogin.click { doLogin() }
         tvGetPhoneCode.click { getPhoneCode() }
     }

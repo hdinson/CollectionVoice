@@ -121,11 +121,6 @@ public class VoicePlay {
                         assetFileDescription.getLength());
                 mMediaPlayer.prepareAsync();
                 mMediaPlayer.setOnPreparedListener(mediaPlayer -> mMediaPlayer.start());
-                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-                    PlaybackParams playbackParams = mMediaPlayer.getPlaybackParams();
-                    playbackParams.setSpeed(1.2f);
-                    mMediaPlayer.setPlaybackParams(playbackParams);
-                }
                 mMediaPlayer.setOnCompletionListener(mediaPlayer -> {
                     mediaPlayer.reset();
                     counter[0]++;
