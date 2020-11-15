@@ -6,6 +6,8 @@ import android.content.IntentFilter
 import com.dinson.blingbase.RxBling
 import com.dinson.blingbase.rxcache.RxCache
 import com.dinson.blingbase.rxcache.diskconverter.GsonDiskConverter
+import com.yzy.voice.VoicePlay
+import com.yzy.voice.model.TTSPlayerHelper
 import java.io.File
 
 class GlobalApplication : Application() {
@@ -28,5 +30,8 @@ class GlobalApplication : Application() {
         filter.addAction(Intent.ACTION_SCREEN_ON)
         filter.addAction(Intent.ACTION_SCREEN_OFF)
         registerReceiver(BootCompleteReceiver(), filter)
+
+        //VoicePlay.with(this)
+        TTSPlayerHelper.init(this).start()
     }
 }

@@ -1,15 +1,12 @@
 package com.zjta.collectionvoice.im
 
 import android.content.Context
-import android.view.WindowManager
-import androidx.appcompat.app.AlertDialog
 import com.google.gson.Gson
 import com.yzy.voice.VoicePlay
+import com.yzy.voice.model.TTSPlayerHelper
 import com.yzy.voice.util.StringUtils
-import com.zjta.collectionvoice.LoginActivity
 import com.zjta.collectionvoice.SplashActivity
 import com.zjta.collectionvoice.bean.ServiceMessage
-import com.zjta.collectionvoice.bean.StopSocket
 import com.zjta.collectionvoice.event.RefreshOrder
 import com.zjta.collectionvoice.utils.loge
 import com.zjta.collectionvoice.utils.logi
@@ -33,12 +30,13 @@ open class JWebSocketClient(val context: Context, serverUri: URI) :
             val bean = Gson().fromJson(message, ServiceMessage::class.java)
             if (bean.type == 1) {
                 //1 是付款到账消息类型
-                val money = StringUtils.getMoney(bean.data)
-                if (money.isEmpty()){
+                /*val money = StringUtils.getMoney(bean.data)
+                if (money.isEmpty()) {
                     "未识别到金额: ${bean.data}".toast()
                     return
-                }
-                VoicePlay.with(context).play(money, false)
+                }*/
+                //VoicePlay.with(context).playTTs(bean.data)
+                TTSPlayerHelper.init(context).play(bean.data)
                 EventBus.getDefault().post(RefreshOrder())
             } else if (bean.type == 0) {
                 SplashActivity.otherLogout(context)

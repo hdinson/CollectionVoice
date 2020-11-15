@@ -6,8 +6,10 @@ import android.content.Intent
 import android.content.ServiceConnection
 import android.os.Bundle
 import android.os.IBinder
+import android.speech.tts.TextToSpeech
 import android.util.Log
 import android.widget.ScrollView
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dinson.blingbase.annotate.BindEventBus
 import com.dinson.blingbase.kotlin.click

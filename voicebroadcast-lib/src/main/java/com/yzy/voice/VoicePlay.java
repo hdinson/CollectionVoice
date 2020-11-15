@@ -4,15 +4,22 @@ import android.content.Context;
 import android.content.res.AssetFileDescriptor;
 import android.media.MediaPlayer;
 import android.media.PlaybackParams;
+import android.speech.tts.TextToSpeech;
+import android.speech.tts.UtteranceProgressListener;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.yzy.voice.constant.VoiceConstants;
 import com.yzy.voice.util.FileUtils;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+
+import static android.content.ContentValues.TAG;
 
 /**
  * @author 志尧
@@ -26,10 +33,19 @@ public class VoicePlay {
 
     private ExecutorService mExecutorService;
     private Context mContext;
+    private TextToSpeech mSpeech;
 
     private VoicePlay(Context context) {
         this.mContext = context;
         this.mExecutorService = Executors.newCachedThreadPool();
+        mSpeech = new TextToSpeech(context, status -> {
+            if (status != TextToSpeech.SUCCESS) {
+                Toast.makeText(context, "TTS引擎初始化失败", Toast.LENGTH_SHORT).show();
+            }
+        });
+        mSpeech.setLanguage(Locale.CHINESE);
+        mSpeech.setSpeechRate(1.2f);
+        mSpeech.setPitch(1.0f);
     }
 
     private volatile static VoicePlay mVoicePlay = null;
@@ -55,8 +71,8 @@ public class VoicePlay {
      *
      * @param money
      */
-    public void play(String money) {
-        play(money, false);
+    public void playCompose(String money) {
+        playCompose(money, false);
     }
 
     /**
@@ -65,7 +81,7 @@ public class VoicePlay {
      * @param money
      * @param checkNum
      */
-    public void play(String money, boolean checkNum) {
+    public void playCompose(String money, boolean checkNum) {
         VoiceBuilder voiceBuilder = new VoiceBuilder.Builder()
                 .start(VoiceConstants.SUCCESS)
                 .money(money)
@@ -75,12 +91,37 @@ public class VoicePlay {
         executeStart(voiceBuilder);
     }
 
+    public void playTTs(String text) {
+        Log.e(TAG, "playTTs: "+text );
+        mExecutorService.execute(() -> {
+            mSpeech.speak(text, TextToSpeech.QUEUE_FLUSH, null, "id");
+            mSpeech.setOnUtteranceProgressListener(new UtteranceProgressListener() {
+                @Override
+                public void onStart(String utteranceId) {
+                    Log.e(TAG, "onStart: " + utteranceId);
+                }
+
+                @Override
+                public void onDone(String utteranceId) {
+                    Log.e(TAG, "onDone: " + utteranceId);
+                }
+
+                @Override
+                public void onError(String utteranceId) {
+                    Log.e(TAG, "onError: " + utteranceId);
+                }
+            });
+
+        });
+    }
+
+
     /**
      * 接收自定义
      *
      * @param voiceBuilder
      */
-    public void play(VoiceBuilder voiceBuilder) {
+    public void playCompose(VoiceBuilder voiceBuilder) {
         executeStart(voiceBuilder);
     }
 
@@ -91,7 +132,7 @@ public class VoicePlay {
      */
     private void executeStart(VoiceBuilder builder) {
         List<String> voicePlay = VoiceTextTemplate.genVoiceList(builder);
-        if (voicePlay == null || voicePlay.isEmpty()) {
+        if (voicePlay.isEmpty()) {
             return;
         }
 

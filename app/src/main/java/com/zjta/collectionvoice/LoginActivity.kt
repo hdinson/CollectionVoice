@@ -7,6 +7,8 @@ import android.os.Bundle
 import com.dinson.blingbase.kotlin.*
 import com.dinson.blingbase.retrofit.RxSchedulers
 import com.dinson.blingbase.utils.RxHelper
+import com.yzy.voice.VoicePlay
+import com.yzy.voice.model.TTSPlayerHelper
 import com.zjta.collectionvoice.bean.GetPhoneCode
 import com.zjta.collectionvoice.bean.LoginCodeReq
 import com.zjta.collectionvoice.bean.LoginPwdReq
@@ -46,7 +48,12 @@ class LoginActivity : BaseActivity() {
         }
         vDoLogin.click { doLogin() }
         tvGetPhoneCode.click { getPhoneCode() }
+        test.click {
+            TTSPlayerHelper.init(this).play("欢迎光临${index++}")
+              }
     }
+
+    private var index = 200
 
     @SuppressLint("SetTextI18n")
     private fun getPhoneCode() {
